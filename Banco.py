@@ -1,18 +1,5 @@
 import sqlite3
-
-def CheckValidCPF(CPF):
-    return True
-
-def CheckValidCNPJ(CNPJ):
-    return True
-
-def AdressInformation(CEP):
-    rua = None
-    numero = None
-    complemento = None
-    bairro = None
-    UF = None
-    return (rua, numero, complemento, bairro, UF)
+import Check
 
 
 class Banco:
@@ -56,24 +43,14 @@ class Banco:
         CEP=None,
     ):
         c = self.conexao.cursor()
-
-        if CheckValidCPF(CPF):
-            CPF: str = CPF
-            CNPJ = None
-        elif CheckValidCNPJ(CNPJ):
-            CNPJ: str = CNPJ
-            CPF = None
-        else:
-            print("CPF ou CNPJ inválido")
-
-        (rua, numero, complemento, bairro, UF) = AdressInformation(CEP)
-
         c.execute(
             """
             INSERT INTO users (
                 nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """,(nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP),)
+            """,
+            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP),
+        )
         self.conexao.commit()
         newID = c.lastrowid
         c.close()
@@ -86,7 +63,9 @@ class Banco:
         c.close()
         return users
 
-    def Update(self, Id,
+    def Update(
+        self,
+        Id,
         nome = None,
         CPF=None,
         CNPJ=None,
@@ -99,18 +78,6 @@ class Banco:
         CEP=None,
     ):
         c = self.conexao.cursor()
-
-        if CheckValidCPF(CPF):
-            CPF: str = CPF
-            CNPJ = None
-        elif CheckValidCNPJ(CNPJ):
-            CNPJ: str = CNPJ
-            CPF = None
-        else:
-            print("CPF ou CNPJ inválido")
-
-        (rua, numero, complemento, bairro, UF) = AdressInformation(CEP)
-
         c.execute(
             """
             UPDATE users
@@ -126,14 +93,13 @@ class Banco:
                 CEP = ?
             WHERE id = ?
             """,
-            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, id),
+            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, Id),
         )
         self.conexao.commit()
         c.close()
 
     def Delete(self, Id):
         c = self.conexao.cursor()
-        c.execute("DELETE FROM users WHERE id = ?", (id,))
+        c.execute("DELETE FROM users WHERE id = ?", (Id,))
         self.conexao.commit()
         c.close()
-
