@@ -19,6 +19,7 @@ class Banco:
                 numero TEXT,
                 complemento TEXT,
                 bairro TEXT,
+                cidade TEXT,
                 UF TEXT,
                 CEP TEXT,
                 contato TEXT
@@ -38,6 +39,7 @@ class Banco:
         numero=None,
         complemento=None,
         bairro=None,
+        cidade=None,
         UF=None,
         CEP=None,
         contato=None,
@@ -46,10 +48,10 @@ class Banco:
         c.execute(
             """
             INSERT INTO users (
-                nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato
+                nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, cidade, UF, CEP, contato
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato),
+            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, cidade, UF, CEP, contato),
         )
         self.conexao.commit()
         newID = c.lastrowid
@@ -58,7 +60,7 @@ class Banco:
 
     def Read(self):
         c = self.conexao.cursor()
-        c.execute("SELECT id, nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato FROM users ORDER BY id")
+        c.execute("SELECT id, nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, cidade, UF, CEP, contato FROM users ORDER BY id")
         users = c.fetchall()
         c.close()
         return users
@@ -74,6 +76,7 @@ class Banco:
         numero=None,
         complemento=None,
         bairro=None,
+        cidade=None,
         UF=None,
         CEP=None,
         contato=None,
@@ -90,12 +93,13 @@ class Banco:
                 numero = ?,
                 complemento = ?,
                 bairro = ?,
+                cidade = ?,
                 UF = ?,
                 CEP = ?,
                 contato = ?
             WHERE id = ?
             """,
-            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato, Id),
+            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, cidade, UF, CEP, contato, Id),
         )
         self.conexao.commit()
         c.close()
