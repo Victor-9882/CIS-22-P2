@@ -11,12 +11,12 @@ class App(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (TelaCadastro, TelaInicial, TelaSecundaria):
+        for F in (TelaCadastro, TelaInicial, TelaSecundaria, TelaErroDocumento):
             frame = F(container, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.mostrar_tela(TelaCadastro)
+        self.mostrar_tela(TelaErroDocumento)
 
     def mostrar_tela(self, classe):
         self.frames[classe].tkraise()
@@ -235,6 +235,8 @@ class TelaCadastro(tk.Frame):
         self.botao_adicionar = tk.Button(frame_botao_adicionar, 
                                          text="Adicionar Usuário",
                                          command=self.adicionar_usuario)
+        
+  
         self.botao_adicionar.pack(pady = 10)
 
         frame_botao_ver_users= tk.Frame(self, width=600)
@@ -250,7 +252,33 @@ class TelaCadastro(tk.Frame):
     def get_tupla(self):
         return self.tupla
 
-#class TelaErro(tk.Tk):
+class TelaErroDocumento(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+
+
+        # Divisão na Tela
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+
+        self.titulo = tk.Frame(self, width = 600)
+        self.titulo.grid(row=0, column=0,columnspan=2, sticky="nsew")
+
+        titulo = tk.Label(self.titulo,
+                        text="Você digitou um CPF inválido",
+                        font=("Arial", 18, "bold"))
+        titulo.pack(pady=10)
+
+        self.botao_erro = tk.Button(self, 
+                                         text="Clique para tentar novamente",
+                                         command=lambda: controller.mostrar_tela(TelaCadastro))
+
+        
+        self.botao_erro.pack(pady = 10)
+
+
+
+
 
 
         
