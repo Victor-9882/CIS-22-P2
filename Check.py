@@ -4,11 +4,14 @@ from urllib.request import Request, urlopen
 
 def CheckValidCPF(valueCPF):
     cpf = CPF()
-    return cpf.validate(valueCPF)
+    if (not cpf.validate(valueCPF)):
+        raise ValueError("CPF inválido")
+
 
 def CheckValidCNPJ(valueCNPJ):
     cnpj = CNPJ()
-    return cnpj.validate(valueCNPJ)
+    if (not cnpj.validate(valueCNPJ)):
+        raise ValueError("CNPJ inválido")
 
 def AdressInformation(CEP):
     cep = str(CEP).replace("-", "").replace(".", "").strip()

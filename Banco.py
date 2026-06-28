@@ -58,7 +58,7 @@ class Banco:
 
     def Read(self):
         c = self.conexao.cursor()
-        c.execute("SELECT id, nome FROM users ORDER BY id")
+        c.execute("SELECT id, nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato FROM users ORDER BY id")
         users = c.fetchall()
         c.close()
         return users
