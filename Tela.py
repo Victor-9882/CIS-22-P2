@@ -36,9 +36,7 @@ class TelaCadastro(tk.Tk):
         #Botão Inferior
         self.contruir_botao()
 
-
-
-
+        self.tupla = (None, None, None, None, None, None, None, None, None, None, None)
 
 
     def construir_esquerda(self):
@@ -178,7 +176,8 @@ class TelaCadastro(tk.Tk):
 
         data_nascimento = self.dia.get() + "-" + self.mes.get() + "-" + self.ano.get()
         #print(data_nascimento)
-        return (
+
+        self.tupla =  (
         self.campo_nome.get(),
         self.campo_cpf.get(),
         self.campo_cpf.get(),
@@ -207,6 +206,8 @@ class TelaCadastro(tk.Tk):
                                          text="Ver usuários")
         self.botao_ver_users.pack(pady = 10)
 
+    def get_tupla(self):
+        return self.tupla
 
 
         
