@@ -49,7 +49,7 @@ class Banco:
             """
             INSERT INTO users (
                 nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, cidade, UF, CEP, contato
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, cidade, UF, CEP, contato),
         )
