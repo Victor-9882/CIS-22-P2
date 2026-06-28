@@ -1,12 +1,49 @@
 import tkinter as tk
 
-
-class TelaCadastro(tk.Tk):
+class App(tk.Tk):
     def __init__(self):
         super().__init__()
-
-        self.title("Catalogo de Prestadores de Serviço em Tecnologia da Informação (TI)")
         self.geometry("900x600")
+
+        container = tk.Frame(self)
+        container.pack(fill="both", expand=True)
+        container.grid_rowconfigure(0, weight=1)
+        container.grid_columnconfigure(0, weight=1)
+
+        self.frames = {}
+        for F in (TelaCadastro, TelaInicial, TelaSecundaria):
+            frame = F(container, self)
+            self.frames[F] = frame
+            frame.grid(row=0, column=0, sticky="nsew")
+
+        self.mostrar_tela(TelaCadastro)
+
+    def mostrar_tela(self, classe):
+        self.frames[classe].tkraise()
+
+
+class TelaInicial(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        tk.Label(self, text="Tela Inicial").pack(pady=20)
+        tk.Button(self, text="Ir para Tela 2",
+                  command=lambda: controller.mostrar_tela(TelaSecundaria)).pack()
+
+
+class TelaSecundaria(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+        tk.Label(self, text="Tela Secundária").pack(pady=20)
+        tk.Button(self, text="Voltar",
+                  command=lambda: controller.mostrar_tela(TelaInicial)).pack()
+
+
+class TelaCadastro(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+
+        #self.title("Catalogo de Prestadores de Serviço em Tecnologia da Informação (TI)")
+        #self.geometry("900x600")
 
 
         # Divisão na Tela
@@ -34,7 +71,7 @@ class TelaCadastro(tk.Tk):
         self.construir_direita()
 
         #Botão Inferior
-        self.contruir_botao()
+        self.contruir_botao(controller)
 
         self.tupla = (None, None, None, None, None, None, None, None, None, None, None)
 
@@ -186,11 +223,12 @@ class TelaCadastro(tk.Tk):
         self.campo_numero.get(),
         self.campo_complemento.get(),
         self.campo_bairro.get(),
+        self.campo_cidade.get(),
         self.campo_uf.get(),
         self.campo_cep.get(),
         self.campo_contato.get())
 
-    def contruir_botao(self):
+    def contruir_botao(self, controller):
         frame_botao_adicionar = tk.Frame(self, width=600)
         frame_botao_adicionar.grid(row=2, column=0, sticky="ew")
 
@@ -203,15 +241,20 @@ class TelaCadastro(tk.Tk):
         frame_botao_ver_users.grid(row=2, column=1, sticky="ew")
 
         self.botao_ver_users = tk.Button(frame_botao_ver_users, 
-                                         text="Ver usuários")
+                                         text="Ver usuários",
+                                         command=lambda: controller.mostrar_tela(TelaSecundaria))
+
+        
         self.botao_ver_users.pack(pady = 10)
 
     def get_tupla(self):
         return self.tupla
 
+#class TelaErro(tk.Tk):
+
 
         
 
 
-janela = TelaCadastro()
+janela = App()
 janela.mainloop()
