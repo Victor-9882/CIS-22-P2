@@ -1,6 +1,4 @@
 import sqlite3
-import Check
-
 
 class Banco:
     def __init__(self, caminho_banco="users.db"):
@@ -22,7 +20,8 @@ class Banco:
                 complemento TEXT,
                 bairro TEXT,
                 UF TEXT,
-                CEP TEXT
+                CEP TEXT,
+                contato TEXT
             )
             """
         )
@@ -41,15 +40,16 @@ class Banco:
         bairro=None,
         UF=None,
         CEP=None,
+        contato=None,
     ):
         c = self.conexao.cursor()
         c.execute(
             """
             INSERT INTO users (
-                nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
-            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP),
+            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato),
         )
         self.conexao.commit()
         newID = c.lastrowid
@@ -76,6 +76,7 @@ class Banco:
         bairro=None,
         UF=None,
         CEP=None,
+        contato=None,
     ):
         c = self.conexao.cursor()
         c.execute(
@@ -90,10 +91,11 @@ class Banco:
                 complemento = ?,
                 bairro = ?,
                 UF = ?,
-                CEP = ?
+                CEP = ?,
+                contato = ?
             WHERE id = ?
             """,
-            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, Id),
+            (nome, CPF, CNPJ, dataNascimento, rua, numero, complemento, bairro, UF, CEP, contato, Id),
         )
         self.conexao.commit()
         c.close()
