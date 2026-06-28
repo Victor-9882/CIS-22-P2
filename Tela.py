@@ -250,7 +250,33 @@ class TelaCadastro(tk.Frame):
     def get_tupla(self):
         return self.tupla
 
-#class TelaErro(tk.Tk):
+class TelaErroDocumento(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent)
+
+
+        # Divisão na Tela
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(1, weight=1)
+
+        self.titulo = tk.Frame(self, width = 600)
+        self.titulo.grid(row=0, column=0,columnspan=2, sticky="nsew")
+
+        titulo = tk.Label(self.titulo,
+                        text="Você digitou um CPF inválido",
+                        font=("Arial", 18, "bold"))
+        titulo.pack(pady=10)
+
+        self.botao_erro = tk.Button(self, 
+                                         text="Clique para tentar novamente",
+                                         command=lambda: controller.mostrar_tela(TelaCadastro))
+
+        
+        self.botao_erro.grid(row=1, column=0, columnspan=2, pady=10)
+
+
+
+
 
 
         
